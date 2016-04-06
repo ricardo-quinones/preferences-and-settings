@@ -1,0 +1,39 @@
+[user]
+	email = r.a.quinones@gmail.com
+	name = Ricardo Quiñones
+[merge]
+  summary = true
+  tool = "p4merge"
+[mergetool "p4merge"]
+  cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  keepTemporaries = false
+  keepBackup = false
+  trustExitCode = false
+[core]
+	autocrlf = input
+	safecrlf = true
+[alias]
+  ci = commit
+  st = status
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+[push]
+	default = simple
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
