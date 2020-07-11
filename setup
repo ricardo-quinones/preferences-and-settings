@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Change to locality of where we will start running the rest of the script commands
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+cd $DIR
+
+# Install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+# Install homebrew bundle
+brew bundle
+
+# Make a temporary directory
+rm -rf tmp/
+mkdir tmp
+
+# Download iterm zip file
+curl -sS https://iterm2.com/downloads/stable/iTerm2-3_3_12.zip > tmp/iterm2.zip
+
+# Unzip the zip file
+cd tmp/ && unzip iterm2.zip
+
+# Move the file to /Applications
+application_name=$(ls -1 | grep -i .app)
+mv $application_name /Applications
+
+# Move back to the root of the repoo
+cd ../
+
+# Install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Override the existing the .zshrc
+cat .zshrc > ~/.zshrc
+
+# Install fuzzy search
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
