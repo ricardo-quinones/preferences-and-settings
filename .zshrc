@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/gitScripts:$PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH=~/pact/bin:$PATH
 export PATH="$HOME/.yarn/bin:$PATH"
@@ -90,7 +91,7 @@ export LANG=en_US.UTF-8
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='subl -w'
+export EDITOR='code --wait'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -137,3 +138,26 @@ cd() {
 cd .
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -d "$HOME/Library/Android/sdk" ] && ANDROID_SDK=$HOME/Library/Android/sdk || ANDROID_SDK=$HOME/Android/Sdk
+echo "export ANDROID_SDK=$ANDROID_SDK" >> ~/`[[ $SHELL == *"zsh" ]] && echo '.zshenv' || echo '.bash_profile'`
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+# 1password CLI autocompletion
+eval "$(op completion zsh)"; compdef _op op
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/Cellar/tfenv/3.0.0/versions/1.4.6/terraform terraform
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ricardoquinones/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ricardoquinones/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ricardoquinones/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ricardoquinones/google-cloud-sdk/completion.zsh.inc'; fi
+
+# pyenv setup
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
