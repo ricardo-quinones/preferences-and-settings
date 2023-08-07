@@ -1,0 +1,17 @@
+#!/bin/sh
+
+git remote prune origin
+branches=$(git branch -vv | grep -i ': gone]' | grep -v '^\*' | awk '{ print $1 }')
+echo $branches | xargs git branch -D
+if [ "$branches" = "" ]; then
+  numbranches="0"
+else
+  numbranches=$(echo $branches | wc -l | xargs)
+fi
+
+
+if [ "$numbranches" = "1" ]; then
+  echo "1 local branch pruned"
+else
+  echo "$numbranches local branches pruned"
+fi

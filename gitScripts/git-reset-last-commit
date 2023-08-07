@@ -1,0 +1,5 @@
+#!/bin/sh
+
+git commit -m "temp" --no-verify --allow-empty --fixup=HEAD >> /dev/null
+GIT_SEQUENCE_EDITOR="cat >> /dev/null" git rebase -i HEAD~2 --autosquash >> /dev/null
+echo "Successfully reset the SHA of the last commit"
