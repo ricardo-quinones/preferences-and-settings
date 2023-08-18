@@ -12,6 +12,7 @@
 [core]
 	autocrlf = input
 	safecrlf = true
+	editor = code --wait
 [alias]
   ci = commit
   st = status
@@ -37,3 +38,5 @@
     added = yellow
     changed = green
     untracked = cyan
+[init]
+	defaultBranch = main
