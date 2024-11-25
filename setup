@@ -83,9 +83,17 @@ then
   mv Visual\ Studio\ Code.app /Applications
 fi
 
+# Install Alfred
+if [[ ! -d /Applications/Alfred.app ]]
+then
+  wget -O Alfred.dmg https://cachefly.alfredapp.com/Alfred_4.8_1312.dmg
+  hdiutil attach Alfred.dmg
+  cp -R /Volumes/Alfred/Alfred\ 4.app /Applications
+  hdiutil detach /Volumes/Alfred
+  rm Alfred.dmg
+fi
+
+# TODO: Install google drive for syncing
 
 # TODO
-# - install homebrew if not installed
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# - install Alfred
 # - install Docker
