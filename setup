@@ -56,9 +56,6 @@ defaults write -g KeyRepeat -int 1
 # TODO
 # - install homebrew if not installed
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# - install Rectangle
 # - install Alfred
 # - install VS Code
 # - install Docker
-
-
