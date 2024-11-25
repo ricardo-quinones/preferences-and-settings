@@ -49,5 +49,16 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # Install nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
+# Make keyboard more responsive in terminal
+defaults write -g InitialKeyRepeat -int 10
+defaults write -g KeyRepeat -int 1
+
+# TODO
+# - install homebrew if not installed
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# - install Rectangle
+# - install Alfred
+# - install VS Code
+# - install Docker
 
 
