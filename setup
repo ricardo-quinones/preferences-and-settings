@@ -4,58 +4,88 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd $DIR
 
-# Install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+if ! command -v brew 2>&1 >/dev/null
+  # Install homebrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+then
 
 # Install homebrew bundle
 brew bundle
 
-# Make a temporary directory
-rm -rf tmp/
-mkdir tmp
+if [[ ! -d /Applications/iTerm.app ]]
+then
+  # Make a temporary directory
+  rm -rf tmp/
+  mkdir tmp
 
-# Download iterm zip file
-curl -sS https://iterm2.com/downloads/stable/iTerm2-3_3_12.zip > tmp/iterm2.zip
+  # Download iterm zip file
+  curl -sS https://iterm2.com/downloads/stable/iTerm2-3_3_12.zip > tmp/iterm2.zip
 
-# Unzip the zip file
-cd tmp/ && unzip iterm2.zip
+  # Unzip the zip file
+  cd tmp/ && unzip iterm2.zip
 
-# Move the file to /Applications
-application_name=$(ls -1 | grep -i .app)
-mv $application_name /Applications
+  # Move the file to /Applications
+  application_name=$(ls -1 | grep -i .app)
+  mv $application_name /Applications
+fi
+
 
 # Move back to the root of the repo
 cd ../
 
 # Copy custom git scripts
+# TODO: handle if already installed
 scripts/git-scripts
 
 # Install zsh
+# TODO: handle if already installed
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Override the existing the .zshrc
+# TODO: handle if already synced
 cat .zshrc > ~/.zshrc
 
 # Install zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]]
+then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+fi
 
 # Install zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]]
+then
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+fi
 
 # Install fuzzy search
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+if [[ ! -d ~/.fzf ]]
+then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
 
 # Install nvm (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+if ! command -v nvm 2>&1 >/dev/null
+then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+fi
 
 # Make keyboard more responsive in terminal
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
 
+# Install VS Code
+if [[ ! -d /Applications/Visual\ Studio\ Code.app ]]
+then
+  wget -O vscode.zip https://code.visualstudio.com/sha/download\?build\=stable\&os\=darwin-arm64
+  unzip vscode.zip
+  rm vscode.zip
+  mv Visual\ Studio\ Code.app /Applications
+fi
+
+
 # TODO
 # - install homebrew if not installed
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # - install Alfred
-# - install VS Code
 # - install Docker
